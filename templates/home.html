@@ -7,5 +7,32 @@
 </head>
 <body>
     <h1>AI Recommendation Welcomes you!</h1>
+    <form id="myForm">
+        <input type="text" name="data" id="data" required placeholder="search...">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#myForm').on('submit', function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/submit',
+                    data: formData,
+                    success: function(response) {
+                        // Display the success message
+                        $('#result').html('<p>' + response.message + '</p>');
+                    },
+                    error: function() {
+                        // Display an error message
+                        $('#result').html('<p>An error occurred.</p>');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
